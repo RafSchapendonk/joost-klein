@@ -136,6 +136,7 @@ export const mySketch = (p) => {
         this.y = p.random(-p.height, p.height);
         this.z = p.width;
         this.pz = this.z
+
       }
     }
 
