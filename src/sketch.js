@@ -2,6 +2,8 @@ import { db } from "./firebase.js";
 import { collection, getDocs } from "firebase/firestore";
 const dromenRef = collection(db, "dromen")
 
+const fillerDromen = [];
+
 async function leesDroom() {
   const querySnapshot = await getDocs(dromenRef);
   querySnapshot.forEach((doc) => {
@@ -56,10 +58,12 @@ export const mySketch = (p) => {
     for (let i = 0; i < 100; i++) wordArtItems.push(new WordArtItem());
 
     p.colorMode('RGB');
-    p.background(236, 233, 216);
   };
 
   p.draw = () => {
+    p.background(236, 233, 216);
+    p.translate(p.width / 2, p.height / 2);
+
     for (let i = 0; i < wordArtItems.length; i++) {
       wordArtItems[i].update();
       wordArtItems[i].draw();
@@ -150,6 +154,7 @@ export const mySketch = (p) => {
       this.pz = this.z;
 
       p.image(img, px, py, sx, sy)
+      p.scale(-1, 1)
     }
   }
 };
