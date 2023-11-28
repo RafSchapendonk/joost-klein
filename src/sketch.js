@@ -70,14 +70,14 @@ export const mySketch = (p) => {
     p.background(236, 233, 216);
     p.translate(p.width / 2, p.height / 2);
 
-    for (let i = 0; i < wordArtItems.length; i++) {
-      wordArtItems[i].update();
-      wordArtItems[i].draw();
+    for (let item of wordArtItems) {
+      item.update();
+      item.draw();
     }
 
-    for (let i = 0; i < imageItems.length; i++) {
-      imageItems[i].update();
-      imageItems[i].draw();
+    for (let item of imageItems) {
+      item.update();
+      item.draw();
     }
   };
 
