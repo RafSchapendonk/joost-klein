@@ -37,13 +37,19 @@ export const mySketch = (p) => {
     "twentyone",
     "twentytwo",
   ];
-  let speed = 1;
 
-  let img
+  let imgUrls = ['joost.jpg', 'giphy.gif', 'zaanse-mayo.png', 'acid.jpg', 'timboulder-friesland.gif', 'appie.png', 'brunzyn.png', 'joost-lotto.gif', 'joost-tilburg-1.gif', 'joost-tilburg-2.gif', 'joost-tilburg-3.gif', 'joost-tilburg-4.gif', 'joost-tilburg-moshpit.gif', 'joost-tilburg.jpg', 'meeuw.png', 'wanneer-vieze-asbak.jpg', 'ski agu.jpg', 'joost-en-donnie.png', 'joost-klein-portret.jpg', 'joost-fok.jpg', 'tantu-beats.jpg', 'gitaar-guy.jpg', 'joost-klein-droom-groot.jpg', 'joost-lowlands.jpg', 'joost-lowlands2.jpg', 'baby-joost.jpg']
+  let images = [];
   let imageItems = []
 
+  let speed = 1;
+
   p.preload = () => {
-    img = p.loadImage('/static/joost.jpg');
+    for (var i = 0; i < imgUrls.length; i++) {
+      images[i] = p.loadImage('/static/' + imgUrls[i]);
+    }
+
+    console.log(images)
   }
 
   p.setup = async () => {
@@ -51,7 +57,7 @@ export const mySketch = (p) => {
     var canvas = p.createCanvas(canvasHolder.offsetWidth, canvasHolder.offsetHeight);
     canvas.parent("sketch-holder");
 
-    for (let i = 0; i < 100; i++) imageItems.push(new ImageItem());
+    for (let i = 0; i < 50; i++) imageItems.push(new ImageItem());
 
     await leesDroom();
 
@@ -84,7 +90,7 @@ export const mySketch = (p) => {
       this.fontSize = 1;
 
       this.myDiv = p.createDiv("");
-      this.myDiv.class(`style-${p.random(wordArtStyles)}`);
+      this.myDiv.class(`style-${p.random(wordArtStyles)}`); https://www.google.com/search?q=p5+png+transparency&sca_esv=585881890&sxsrf=AM9HkKmo5fmv5IjjB5Y2Pmp20uupKRUw4A%3A1701168200134&ei=SMRlZbfZB76hi-gPl--f6AE&ved=0ahUKEwi3nZayweaCAxW-0AIHHZf3Bx0Q4dUDCBA&uact=5&oq=p5+png+transparency&gs_lp=Egxnd3Mtd2l6LXNlcnAiE3A1IHBuZyB0cmFuc3BhcmVuY3kyCBAAGIAEGKIEMggQABiJBRiiBDIIEAAYgAQYogQyCBAAGIAEGKIESLoOUJ8IWKQMcAJ4AZABAJgBbqABpwKqAQMzLjG4AQPIAQD4AQHCAgoQABhHGNYEGLADwgIHEAAYgAQYDcICCBAAGB4YDRgPwgIIEAAYCBgeGA3CAgsQABiABBiKBRiGA-IDBBgAIEGIBgGQBgg&sclient=gws-wiz-serp
       this.divChild = p.createDiv("");
       this.pTag = p.createP(p.random(fillerDromen));
 
@@ -107,8 +113,8 @@ export const mySketch = (p) => {
     };
 
     draw() {
-      let px = p.map(this.x / this.pz, 0, 1, 0, p.width / 10);
-      let py = p.map(this.y / this.pz, 0, 1, 0, p.height / 10);
+      let px = p.map(this.x / this.pz, 0, 1, 0, p.width) / 2;
+      let py = p.map(this.y / this.pz, 0, 1, 0, p.height) / 2;
       this.pz = this.z;
 
       this.pTag.class("preview");
@@ -129,11 +135,12 @@ export const mySketch = (p) => {
       this.x = p.random(-p.width, p.width);
       this.y = p.random(-p.height, p.height);
       this.z = p.random(p.width);
+      this.imageDraw = p.random(images)
       this.pz = this.z;
     }
 
     update() {
-      this.z = this.z - 1;
+      this.z = this.z - 2;
 
       if (this.z < 1) {
         this.x = p.random(-p.width, p.width);
@@ -144,14 +151,15 @@ export const mySketch = (p) => {
     }
 
     draw() {
-      let sx = p.map((this.x / this.z), 0, 1, 0, p.width / 10);
-      let sy = p.map((this.y / this.z), 0, 1, 0, p.height / 10);
+      let sx = p.map((this.x / this.z), 0, 1, 0, this.imageDraw.width / 5);
+      let sy = p.map((this.y / this.z), 0, 1, 0, this.imageDraw.height / 5);
 
-      let px = p.map((this.x / this.pz), 0, 1, 0, p.width / 10);
-      let py = p.map((this.y / this.pz), 0, 1, 0, p.height / 10);
+      let px = this.imageDraw.width / 5;
+      let py = this.imageDraw.height / 5;
       this.pz = this.z;
 
-      p.image(img, px, py, sx, sy)
+      p.image(this.imageDraw, sx, sy, px, py);
+      p.background(0, 0, 0, 0)
       p.scale(-1, 1)
     }
   }
