@@ -133,7 +133,7 @@ export const mySketch = (p) => {
     }
 
     update() {
-      this.z = this.z - speed;
+      this.z = this.z - 10;
 
       if (this.z < 1) {
         this.x = p.random(-p.width, p.width);
@@ -144,13 +144,11 @@ export const mySketch = (p) => {
     }
 
     draw() {
-      let sx = p.map(this.x / this.z, 0, 1, 0, p.width);
-      let sy = p.map(this.y / this.z, 0, 1, 0, p.height);
+      let sx = p.map((this.x / this.z) / 10, 0, 1, 0, p.width);
+      let sy = p.map((this.y / this.z) / 10, 0, 1, 0, p.height);
 
-      let r = p.map(this.z, 0, p.width, 16, 0)
-
-      let px = p.map(this.x / this.pz, 0, 1, 0, p.width);
-      let py = p.map(this.y / this.pz, 0, 1, 0, p.height);
+      let px = p.map((this.x / this.pz) / 100, 0, 1, 0, p.width);
+      let py = p.map((this.y / this.pz) / 100, 0, 1, 0, p.height);
       this.pz = this.z;
 
       p.image(img, px, py, sx, sy)
